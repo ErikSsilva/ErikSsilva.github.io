@@ -14,6 +14,50 @@ body {
   background-size: cover;
 }
 
+:root {
+  --text-color: #e5e5e5;
+  --bg-url: url(assets/bg-mobile.jpg);
+  --switch-bg-url: white url(assets/web.svg) no-repeat top center/contain;
+  --bg-bt: transparent;
+  --button-color: #e5e5e5;
+  --button-text: #202020;
+  --switch-color: rgba(255, 255, 255, 0.692);
+  --flip-preserve: preserve-3d;
+  --animation: rotateY(0deg);
+  --animation-back: rotateY(-180deg);
+}
+
+.light {
+  --bg-url: url(assets/bg-mobile.jpg);
+  --switch-bg-url: white url(assets/game.svg) no-repeat top center/contain;
+  --flip-preserve: preserve-3d;
+  --bg-bt: #e5e5e5;
+  --animation-back: rotateY(0deg);
+  --animation: rotateY(180deg);
+}
+
+@keyframes slide-in {
+  from {
+    left: 0;
+  }
+  to {
+    left: 50%;
+  }
+}
+
+@keyframes slide-back {
+  from {
+    left: 50%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+.light #switch button {
+  animation: slide-in 0.4s;
+}
+
 .layout {
   min-height: 100vh;
   min-height: 100svh;
@@ -36,7 +80,7 @@ header {
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
-  color: #e5e5e5;
+  color: var(--text-color);
 }
 
 .avatar {
@@ -47,7 +91,7 @@ header {
 }
 
 .avatar:hover {
-  border-color: #e5e5e5;
+  border-color: var(--text-color);
 }
 
 .subtittle {
@@ -59,16 +103,57 @@ header {
   font-size: 2rem;
 }
 
+#switch {
+  width: 64px;
+  margin: 20px auto 4px;
+  position: relative;
+}
+
+#switch button {
+  width: 32px;
+  height: 32px;
+  background: var(--switch-bg-url);
+  border: none;
+  top: 50%;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  animation: slide-back 0.4s;
+  transition: outline 0.2s;
+}
+
+#switch span {
+  width: 64px;
+  height: 24px;
+  background: var(--switch-color);
+  border: #202020;
+  backdrop-filter: blur(4px);
+  display: block;
+  border-radius: 9999px;
+}
+
+.light #switch button {
+  right: 0;
+}
+
+#switch button:hover {
+  outline: 5px solid var(--switch-color);
+}
+
 .card-butons {
   text-decoration: none;
 }
 
 .links-container {
+  background-color: transparent;
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
   margin-top: 3.2rem;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .card-buttons {
@@ -80,26 +165,72 @@ header {
   justify-content: center;
   align-items: center;
   padding-block: 2.6rem;
-  background-color: #e5e5e5;
-  color: #202020;
+  background-color: var(--button-color);
+  color: var(--button-text);
   border-radius: 8px;
   border: 2px solid transparent;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   min-width: 17rem;
-  transition: background 0.5s ease;
+  transform: var(--animation);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease, background 0.2s ease;
 }
 
 .card-buttons:hover {
-  color: #e5e5e5;
-  fill: #e5e5e5;
+  color: var(--text-color);
+  fill: var(--text-color);
   background: none;
-  border-color: #e5e5e5;
+  border-color: var(--text-color);
 }
 
-.links-container li {
+.button-content {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.flip-back {
+  font-weight: 500;
+  font-size: 1.4rem;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: var(--animation-back);
+  padding-block: 2.6rem;
+  background-color: var(--bg-bt);
+  color: #202020;
+
+  border-radius: 8px;
+  border: 2px solid transparent;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  min-width: 17rem;
+
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease, background 0.2s ease;
+}
+
+.flip-back:hover {
+  color: var(--text-color);
+  fill: var(--text-color);
+  background: none;
+  border-color: var(--text-color);
+}
+
+li {
   display: flex;
   position: relative;
+  transform-style: preserve-3d;
+}
+
+ul {
+  transform-style: preserve-3d;
 }
 
 ion-icon {
@@ -108,6 +239,7 @@ ion-icon {
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
+  transform-style: var(--style);
 }
 
 .card-buttons svg {
@@ -128,4 +260,10 @@ footer {
 
 footer a {
   color: #e5e5e5d0;
+}
+
+@media screen and (min-width: 640px) {
+  body {
+    background: url(assets/bg-web.jpg) no-repeat top center/cover;
+  }
 }
